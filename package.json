@@ -1,0 +1,22 @@
+{
+  "name": "mocha-env-bdd",
+  "version": "1.0.0",
+  "description": "Custom B.D.D. style mocha interface driven by the environment.",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --require index.js --ui env-bdd"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LegalShield/mocha-env-bdd.git"
+  },
+  "author": "douglasrlee",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LegalShield/mocha-env-bdd/issues"
+  },
+  "homepage": "https://github.com/LegalShield/mocha-env-bdd#readme",
+  "dependencies": {
+    "mocha": "^8.1.3"
+  }
+}
