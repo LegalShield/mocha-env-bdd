@@ -19,14 +19,6 @@ module.exports = Mocha.interfaces['env-bdd'] = function (suite) {
     context.describe = function (title, fn) {
       let suite = Suite.create(suites[0], title);
 
-      suites.unshift(suite);
-      fn();
-      suites.shift();
-    }
-
-    context.describe.skip_prod = function (title, fn) {
-      let suite = Suite.create(suites[0], title);
-
       if (process.env.ENVIRONMENT === 'prod') {
         suite.pending = true;
         suites.unshift(suite);
@@ -39,16 +31,24 @@ module.exports = Mocha.interfaces['env-bdd'] = function (suite) {
       }
     }
 
-    context.it = function (title, fn) {
-      suites[0].addTest(new Test(title, fn));
-    };
+    context.describe.include_prod = function (title, fn) {
+      let suite = Suite.create(suites[0], title);
 
-    context.it.skip_prod = function (title, fn) {
+      suites.unshift(suite);
+      fn();
+      suites.shift();
+    }
+
+    context.it = function (title, fn) {
       if (process.env.ENVIRONMENT === 'prod') {
-        context.it(title);
+        suites[0].addTest(new Test(title, undefined));
       } else {
         suites[0].addTest(new Test(title, fn));
       }
     }
+
+    context.it.include_prod = function (title, fn) {
+      suites[0].addTest(new Test(title, fn));
+    };
   });
 }

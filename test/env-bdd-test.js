@@ -1,13 +1,13 @@
 require('../index');
 
-describe('My Describe Block', () => {
+describe.include_prod('My Include Prod Describe Block', () => {
   it('My It Block', () => {
   });
 
-  it.skip_prod('My Skip Prod It Block', () => {
+  it.include_prod('My Include Prod It Block', () => {
   });
 
-  describe.skip_prod('My Skip Prod Describe Block', () => {
+  describe('My Describe Block', () => {
     it('My It Block', () => {
     });
   });
