@@ -1,5 +1,3 @@
-require('../index');
-
 describe.include_prod('My Include Prod Describe Block', () => {
   it('My It Block', () => {
   });
