@@ -50,5 +50,6 @@ describe.include_prod('My Include Prod Describe Block', () => {
 });
 ```
 
+---
 ## Notes
 Production is determined as the environment if an environment variable named `ENVIRONMENT` is found and set to either `prod` or `production`. (The value set is case-insensitive.)
