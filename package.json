@@ -1,6 +1,6 @@
 {
   "name": "@legalshield/mocha-env-bdd",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Custom B.D.D. style mocha interface driven by the environment.",
   "main": "index.js",
   "scripts": {
