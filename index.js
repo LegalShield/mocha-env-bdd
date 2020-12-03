@@ -19,8 +19,9 @@ module.exports = Mocha.interfaces['env-bdd'] = function (suite) {
     context.describe = function (title, fn) {
       let suite = Suite.create(suites[0], title);
 
-      if (process.env.ENVIRONMENT.toLowerCase() === 'prod' ||
-          process.env.ENVIRONMENT.toLowerCase() === 'production') {
+      if (process.env.ENVIRONMENT && (
+          process.env.ENVIRONMENT.toLowerCase() === 'prod' ||
+          process.env.ENVIRONMENT.toLowerCase() === 'production')) {
         suite.pending = true;
         suites.unshift(suite);
         fn.call(suite);
@@ -41,8 +42,9 @@ module.exports = Mocha.interfaces['env-bdd'] = function (suite) {
     }
 
     context.it = function (title, fn) {
-      if (process.env.ENVIRONMENT.toLowerCase() === 'prod' ||
-          process.env.ENVIRONMENT.toLowerCase() === 'production') {
+      if (process.env.ENVIRONMENT && (
+          process.env.ENVIRONMENT.toLowerCase() === 'prod' ||
+          process.env.ENVIRONMENT.toLowerCase() === 'production')) {
         suites[0].addTest(new Test(title, undefined));
       } else {
         suites[0].addTest(new Test(title, fn));
