@@ -24,6 +24,8 @@ npm install @legalshield/mocha-env-bdd@<version>
 ---
 ## Usage
 
+Normal run:
+
 ```js
 describe.include_prod('My Include Prod Describe Block', () => {
   // This would run in production
@@ -50,6 +52,105 @@ describe.include_prod('My Include Prod Describe Block', () => {
 });
 ```
 
+Focus on an individual describe block:
+
+```js
+describe.only('My Describe Only Block', () => {
+  it('My It Block', () => {
+    // This would not run in production
+  });
+
+  it.include_prod('My Include Prod It Block', () => {
+    // This would not run in production
+  });
+});
+
+describe('My Describe Block', () => {
+  it('My It Block', () => {
+    // This would not run at all since the other block is focused
+  });
+
+  it.include_prod('My Include Prod It Block', () => {
+    // This would not run at all since the other block is focused
+  });
+});
+```
+
+Focus on an individual describe include prod block:
+
+```js
+describe.include_prod.only('My Describe Include Prod Only Block', () => {
+  it('My It Block', () => {
+    // This would not run in production
+  });
+
+  it.include_prod('My Include Prod It Block', () => {
+    // This would run in production
+  });
+});
+
+describe('My Describe Block', () => {
+  it('My It Block', () => {
+    // This would not run at all since the other block is focused
+  });
+
+  it.include_prod('My Include Prod It Block', () => {
+    // This would not run at all since the other block is focused
+  });
+});
+```
+
+Focus on an individual it block:
+
+```js
+describe('My Describe Block', () => {
+  it.only('My It Only Block', () => {
+    // This would not run in production
+  });
+
+  it.include_prod('My Include Prod It Block', () => {
+    // This would not run at all since the other block is focused
+  });
+});
+
+describe('My Describe Block', () => {
+  it('My It Block', () => {
+    // This would not run at all since the other block is focused
+  });
+
+  it.include_prod('My Include Prod It Block', () => {
+    // This would not run at all since the other block is focused
+  });
+});
+```
+
+Focus on an individual it include prod block:
+
+```js
+describe('My Describe Only Block', () => {
+  it('My It Block', () => {
+    // This would not run at all since the other block is focused
+  });
+
+  it.include_prod.only('My Include Prod It Only Block', () => {
+    // This would run in production
+  });
+});
+
+describe('My Describe Block', () => {
+  it('My It Block', () => {
+    // This would not run at all since the other block is focused
+  });
+
+  it.include_prod('My Include Prod It Block', () => {
+    // This would not run at all since the other block is focused
+  });
+});
+```
+
 ---
 ## Notes
-Production is determined as the environment if an environment variable named `ENVIRONMENT` is found and set to either `prod` or `production`. (The value set is case-insensitive.)
+* Production is determined as the environment if an environment variable named `ENVIRONMENT` is found and set to either `prod` or `production`. (The value set is case-insensitive.)
+* For the focus tests when including prod you can mix the order like so:
+  * `describe.only.include_prod` or `describe.include_prod.only`
+  * `it.only.include_prod` or `it.include_prod.only`
