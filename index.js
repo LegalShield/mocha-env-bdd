@@ -61,6 +61,23 @@ module.exports = Mocha.interfaces['env-bdd'] = function (suite) {
       suites.shift();
     }
 
+    context.describe.only_prod = function (title, fn) {
+      let suite = Suite.create(suites[0], title);
+
+      if (process.env.ENVIRONMENT && (
+          process.env.ENVIRONMENT.toLowerCase() === 'prod' ||
+          process.env.ENVIRONMENT.toLowerCase() === 'production')) {
+        suites.unshift(suite);
+        fn();
+        suites.shift();
+      } else {
+        suite.pending = true;
+        suites.unshift(suite);
+        fn.call(suite);
+        suites.shift();
+      }
+    }
+
     context.describe.include_prod.only = function (title, fn) {
       return common.suite.only({
         title: title,
@@ -71,6 +88,29 @@ module.exports = Mocha.interfaces['env-bdd'] = function (suite) {
 
     context.describe.only.include_prod = function (title, fn) {
       return context.describe.include_prod.only(title, fn);
+    }
+
+    context.describe.only.only_prod = function (title, fn) {
+      if (process.env.ENVIRONMENT && (
+          process.env.ENVIRONMENT.toLowerCase() === 'prod' ||
+          process.env.ENVIRONMENT.toLowerCase() === 'production')) {
+        return common.suite.only({
+          title: title,
+          file: file,
+          fn: fn
+        });
+      } else {
+        suite.pending = true;
+        return common.suite.only({
+          title: title,
+          file: file,
+          fn: fn
+        });
+      }
+    }
+
+    context.describe.only_prod.only = function (title, fn) {
+      return context.describe.only_prod.only(title, fn);
     }
 
     context.it = function (title, fn) {
@@ -84,6 +124,24 @@ module.exports = Mocha.interfaces['env-bdd'] = function (suite) {
         suites[0].addTest(test);
       } else {
         test = new Test(title, fn);
+
+        suites[0].addTest(test);
+      }
+
+      return test;
+    }
+
+    context.it.only_prod  = function (title, fn) {
+      let test;
+
+      if (process.env.ENVIRONMENT && (
+          process.env.ENVIRONMENT.toLowerCase() === 'prod' ||
+          process.env.ENVIRONMENT.toLowerCase() === 'production')) {
+        test = new Test(title, fn);
+
+        suites[0].addTest(test);
+      } else {
+        test = new Test(title, undefined);
 
         suites[0].addTest(test);
       }
@@ -109,6 +167,14 @@ module.exports = Mocha.interfaces['env-bdd'] = function (suite) {
 
     context.it.only.include_prod = function(title, fn) {
       return it.include_prod.only(title, fn);
+    };
+
+    context.it.only_prod.only = function(title, fn) {
+      return common.test.only(mocha, context.it.only_prod(title, fn));
+    };
+
+    context.it.only.only_prod = function(title, fn) {
+      return it.only_prod.only(title, fn);
     };
   });
 }

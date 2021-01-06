@@ -24,6 +24,10 @@ npm install @legalshield/mocha-env-bdd@<version>
 ---
 ## Usage
 
+### Exclude Prod
+all `describe` and `it` calls will exclude prod by default
+
+### Include Prod
 Normal run:
 
 ```js
@@ -51,6 +55,25 @@ describe.include_prod('My Include Prod Describe Block', () => {
   });
 });
 ```
+
+### Only Prod
+
+Likewise for `only_prod`
+
+```js
+describe.only_prod('My Only Include Prod Describe Block', () => {
+  it('My It Block', () => {
+    //this would never run
+  });
+
+  it.only_prod('My Only Include Prod It Block', () => {
+    //this only runs on production
+  });
+});
+
+```
+
+### Focus on test (only)
 
 Focus on an individual describe block:
 
