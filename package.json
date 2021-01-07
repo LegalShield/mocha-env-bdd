@@ -10,6 +10,7 @@
     "test-production": "ENVIRONMENT=production mocha --require index.js --ui env-bdd test/env-bdd-test.js",
     "test-misc": "ENVIRONMENT=misc mocha --require index.js --ui env-bdd test/env-bdd-test.js",
     "test-default-only": "mocha --require index.js --ui env-bdd test/env-bdd-test-only.js",
+    "test-prod-only": "ENVIRONMENT=prod mocha --require index.js --ui env-bdd test/env-bdd-test-prod-only.js",
     "test-only-prod-only-prod": "ENVIRONMENT=prod mocha --require index.js --ui env-bdd test/env-bdd-test-prod-only.js"
   },
   "repository": {
