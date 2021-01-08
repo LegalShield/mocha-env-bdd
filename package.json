@@ -4,13 +4,14 @@
   "description": "Custom B.D.D. style mocha interface driven by the environment.",
   "main": "index.js",
   "scripts": {
-    "test": "npm run test-default && npm run test-prod && npm run test-production && npm run test-misc && npm run test-default-only && npm run test-prod-only",
+    "test": "npm run test-default && npm run test-prod && npm run test-production && npm run test-misc && npm run test-default-only && npm run test-prod-only && npm run test-only-prod-only-prod",
     "test-default": "mocha --require index.js --ui env-bdd test/env-bdd-test.js",
     "test-prod": "ENVIRONMENT=prod mocha --require index.js --ui env-bdd test/env-bdd-test.js",
     "test-production": "ENVIRONMENT=production mocha --require index.js --ui env-bdd test/env-bdd-test.js",
     "test-misc": "ENVIRONMENT=misc mocha --require index.js --ui env-bdd test/env-bdd-test.js",
     "test-default-only": "mocha --require index.js --ui env-bdd test/env-bdd-test-only.js",
-    "test-prod-only": "ENVIRONMENT=prod mocha --require index.js --ui env-bdd test/env-bdd-test-prod-only.js"
+    "test-prod-only": "ENVIRONMENT=prod mocha --require index.js --ui env-bdd test/env-bdd-test-prod-only.js",
+    "test-only-prod-only-prod": "ENVIRONMENT=prod mocha --require index.js --ui env-bdd test/env-bdd-test-prod-only.js"
   },
   "repository": {
     "type": "git",
