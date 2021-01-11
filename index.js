@@ -119,7 +119,7 @@ module.exports = Mocha.interfaces['env-bdd'] = function (suite) {
       if (process.env.ENVIRONMENT && (
           process.env.ENVIRONMENT.toLowerCase() === 'prod' ||
           process.env.ENVIRONMENT.toLowerCase() === 'production')) {
-        test = new Test(title, function(){});
+        test = new Test(title, undefined);
 
         suites[0].addTest(test);
       } else {
@@ -141,7 +141,7 @@ module.exports = Mocha.interfaces['env-bdd'] = function (suite) {
 
         suites[0].addTest(test);
       } else {
-        test = new Test(title, function(){});
+        test = new Test(title, undefined);
 
         suites[0].addTest(test);
       }
