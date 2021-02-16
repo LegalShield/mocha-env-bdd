@@ -33,6 +33,22 @@ module.exports = Mocha.interfaces['env-bdd'] = function (suite) {
       }
     }
 
+    context.xdescribe = function (title, fn) {
+      return common.suite.skip({
+        title: title,
+        file: file,
+        fn: fn
+      });
+    };
+
+    context.xdescribe.only_prod = function (title, fn) {
+      return context.xdescribe(title, fn)
+    };
+
+    context.xdescribe.include_prod = function (title, fn) {
+      return context.xdescribe(title, fn)
+    };
+
     context.describe.only = function(title, fn) {
       if (process.env.ENVIRONMENT && (
           process.env.ENVIRONMENT.toLowerCase() === 'prod' ||
@@ -129,6 +145,18 @@ module.exports = Mocha.interfaces['env-bdd'] = function (suite) {
       }
 
       return test;
+    }
+
+    context.xit = function(title) {
+      return context.it(title);
+    };
+
+    context.xit.include_prod = function(title) {
+      return context.xit(title);
+    }
+
+    context.xit.only_prod = function(title) {
+      return context.xit(title);
     }
 
     context.it.only_prod  = function (title, fn) {
