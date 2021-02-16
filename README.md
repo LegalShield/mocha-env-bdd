@@ -171,9 +171,62 @@ describe('My Describe Block', () => {
 });
 ```
 
+### Skip a test (xdescribe or xit)
+
+Skip an individual describe block:
+
+```js
+xdescribe('My Skipped Describe Block', () => {
+  it('My It Block', () => {
+    // This would be skipped
+  });
+
+  it.include_prod('My Include Prod It Block', () => {
+    // This would be skipped
+  });
+});
+
+describe('My Describe Block', () => {
+  it('My It Block', () => {
+    // This would not be ran in production
+  });
+
+  it.include_prod('My Include Prod It Block', () => {
+    // This would run in production also
+  });
+});
+```
+
+Skip an individual it block:
+
+```js
+describe('My Describe Block', () => {
+  xit('My Skipped It Block', () => {
+    // This would be skipped
+  });
+
+  it.include_prod('My Include Prod It Block', () => {
+    // This would run in production also
+  });
+});
+
+describe('My Describe Block', () => {
+  it('My It Block', () => {
+    // This would not be ran in production
+  });
+
+  it.include_prod('My Include Prod It Block', () => {
+    // This would run in production also
+  });
+});
+```
+
 ---
 ## Notes
 * Production is determined as the environment if an environment variable named `ENVIRONMENT` is found and set to either `prod` or `production`. (The value set is case-insensitive.)
 * For the focus tests when including prod you can mix the order like so:
   * `describe.only.include_prod` or `describe.include_prod.only`
   * `it.only.include_prod` or `it.include_prod.only`
+* For the skipped tests you can also skip `include_prod` or `prod_only` tests like so:
+  * `xdescribe.include_prod` or `xdescribe.prod_only`
+  * `xit.include_prod` or `xit.prod_only`
